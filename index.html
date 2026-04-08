@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ManuBarber | Estilo, Precisión y Calle</title>
+
+    <!-- Google Fonts: Anton (Display urbano/pesado) y Oswald (Cuerpo industrial) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-black": "#0a0a0a",
+              "brand-gray": "#1c1c1c",
+              "brand-red": "#ff0022", // Rojo neón/street agresivo
+            },
+            fontFamily: {
+              display: ['"Anton"', "sans-serif"],
+              body: ['"Oswald"', "sans-serif"],
+            },
+            boxShadow: {
+              "glow-red": "0 0 15px rgba(255, 0, 34, 0.4)",
+              "glow-red-strong": "0 0 25px rgba(255, 0, 34, 0.7)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+      body {
+        background-color: #0a0a0a;
+        color: #ffffff;
+        font-family: "Oswald", sans-serif;
+        overflow-x: hidden;
+      }
+
+      .glass-panel {
+        background: rgba(28, 28, 28, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .text-outline {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Modal transitions */
+      .modal-enter {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      .modal-enter-active {
+        opacity: 1;
+        transform: scale(1);
+        transition: all 0.3s ease-out;
+      }
+      .modal-exit {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .modal-exit-active {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: all 0.2s ease-in;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ff0022;
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased selection:bg-brand-red selection:text-white font-body"
+  >
+    <!-- NAVBAR -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 top-0"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center relative">
+        <a
+          href="#"
+          class="font-display text-4xl tracking-wider text-white hover:text-brand-red transition-colors z-50 uppercase"
+        >
+          <img class="h-[75px]" src="/images/manu-logo.png" />
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden text-white text-2xl z-50 focus:outline-none"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex space-x-8 font-semibold text-lg tracking-wider uppercase items-center"
+        >
+          <li>
+            <a href="#valor" class="hover:text-brand-red transition-colors"
+              >Mi Valor</a
+            >
+          </li>
+          <li>
+            <a href="#trabajo" class="hover:text-brand-red transition-colors"
+              >Mi Trabajo</a
+            >
+          </li>
+          <li>
+            <a href="#servicios" class="hover:text-brand-red transition-colors"
+              >Servicios</a
+            >
+          </li>
+          <li>
+            <a href="#contacto" class="hover:text-brand-red transition-colors"
+              >Contacto</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 text-3xl font-display tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40 uppercase"
+        >
+          <a
+            href="#valor"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Valor</a
+          >
+          <a
+            href="#trabajo"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Trabajo</a
+          >
+          <a
+            href="#servicios"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mis Servicios</a
+          >
+          <a
+            href="#contacto"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Contacto</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section
+      id="hero"
+      class="relative h-screen flex items-center justify-center overflow-hidden"
+    >
+      <!-- Background Image with Overlay -->
+      <div class="absolute inset-0 z-0">
+        <div
+          class="bg-[url('/images/hero.jpg')] bg-cover bg-fixed w-full h-full object-cover object-center"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/10 to-transparent"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/60 to-transparent"
+        ></div>
+      </div>
+
+      <div
+        class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center mt-16"
+      >
+        <h1
+          class="font-display text-7xl md:text-8xl lg:text-9xl leading-none tracking-normal mb-4 drop-shadow-2xl uppercase"
+        >
+          ESTILO, PRECISIÓN <br />
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-800"
+            >Y CALLE</span
+          >
+        </h1>
+        <p
+          class="text-gray-300 text-xl md:text-2xl mb-10 font-light tracking-wide max-w-2xl"
+        >
+          No es solo un corte, es identidad. Elevamos tu imagen con técnicas
+          premium y esencia urbana.
+        </p>
+        <a
+          href="#servicios"
+          class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white bg-brand-red uppercase tracking-widest overflow-hidden transition-all duration-300 hover:shadow-glow-red-strong hover:bg-red-700 text-lg"
+        >
+          <span
+            class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"
+          ></span>
+          <span class="relative">Reservar Hora</span>
+          <i
+            class="fa-solid fa-arrow-right ml-3 relative transition-transform duration-300 group-hover:translate-x-2"
+          ></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- HORARIO BADGE (Floating Style) -->
+    <div class="relative z-20 -mt-8 flex justify-center px-4">
+      <div
+        class="glass-panel py-3 px-6 md:px-10 rounded-none border-l-4 border-l-brand-red shadow-glow-red/20 flex items-center gap-4 text-base md:text-lg font-semibold border-y-0 border-r-0 uppercase"
+      >
+        <i class="fa-regular fa-clock text-brand-red text-xl"></i>
+        <span class="tracking-wider"
+          >LUNES A DOMINGO <span class="text-brand-red mx-2">|</span> 12:30 -
+          21:30</span
+        >
+      </div>
+    </div>
+
+    <!-- SECCIÓN MI VALOR -->
+    <section id="valor" class="py-24 px-6 md:px-12 max-w-7xl mx-auto relative">
+      <h2
+        class="font-display text-6xl md:text-8xl mb-16 text-center reveal uppercase"
+      >
+        MI <span class="text-brand-red">VALOR</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        <!-- Card 1 -->
+        <div
+          class="glass-panel p-8 reveal group hover:-translate-y-2 transition-all duration-300 hover:shadow-glow-red/20 hover:border-brand-red/40 border-t-4 border-transparent hover:border-t-brand-red"
+        >
+          <div
+            class="w-16 h-16 bg-brand-gray flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg rotate-3"
+          >
+            <i class="fa-solid fa-star text-brand-red text-2xl -rotate-3"></i>
+          </div>
+          <h3 class="font-display text-4xl mb-3 tracking-wide uppercase">
+            Experiencia
+          </h3>
+          <p class="text-gray-400 leading-relaxed font-light text-lg">
+            Años perfeccionando la técnica. Manejo impecable de tijeras, navaja
+            y máquina para resultados consistentes y de primer nivel.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="glass-panel p-8 reveal group hover:-translate-y-2 transition-all duration-300 hover:shadow-glow-red/20 hover:border-brand-red/40 border-t-4 border-transparent hover:border-t-brand-red"
+          style="transition-delay: 100ms"
+        >
+          <div
+            class="w-16 h-16 bg-brand-gray flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg -rotate-3"
+          >
+            <i class="fa-solid fa-fire text-brand-red text-2xl rotate-3"></i>
+          </div>
+          <h3 class="font-display text-4xl mb-3 tracking-wide uppercase">
+            Estilo Personalizado
+          </h3>
+          <p class="text-gray-400 leading-relaxed font-light text-lg">
+            Analizamos tus facciones y tu vibra. Cada fade, textura y diseño
+            está pensado exclusivamente para potenciar tu imagen.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="glass-panel p-8 reveal group hover:-translate-y-2 transition-all duration-300 hover:shadow-glow-red/20 hover:border-brand-red/40 border-t-4 border-transparent hover:border-t-brand-red"
+          style="transition-delay: 200ms"
+        >
+          <div
+            class="w-16 h-16 bg-brand-gray flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg rotate-3"
+          >
+            <i
+              class="fa-solid fa-handshake text-brand-red text-2xl -rotate-3"
+            ></i>
+          </div>
+          <h3 class="font-display text-4xl mb-3 tracking-wide uppercase">
+            Atención Profesional
+          </h3>
+          <p class="text-gray-400 leading-relaxed font-light text-lg">
+            Un ambiente premium donde el respeto y la puntualidad son ley.
+            Relájate y deja que el experto haga su trabajo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA MI TRABAJO -->
+    <section
+      id="trabajo"
+      class="py-24 bg-brand-gray/30 relative border-y border-white/5"
+    >
+      <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <h2
+          class="font-display text-6xl md:text-8xl mb-4 text-center reveal uppercase"
+        >
+          MI <span class="text-brand-red">TRABAJO</span>
+        </h2>
+        <p
+          class="text-center text-gray-400 mb-12 max-w-2xl mx-auto reveal font-light text-lg"
+        >
+          Arte en cada detalle. Revisa algunos de los cortes y estilos que
+          marcan la diferencia en la calle.
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 reveal">
+          <!-- Gallery Item 1 -->
+          <div
+            class="relative overflow-hidden group aspect-[4/5] bg-brand-gray"
+          >
+            <img
+              src="/images/cut-1.png"
+              alt="Corte Urbano Fade"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+            >
+              <span
+                class="font-display text-3xl text-brand-red tracking-wider uppercase"
+                >Mid Fade</span
+              >
+            </div>
+          </div>
+          <!-- Gallery Item 2 -->
+          <div
+            class="relative overflow-hidden group aspect-[4/5] bg-brand-gray"
+          >
+            <img
+              src="/images/cut-2.png"
+              alt="Diseño Barbería"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+            >
+              <span
+                class="font-display text-3xl text-brand-red tracking-wider uppercase"
+                >Freestyle</span
+              >
+            </div>
+          </div>
+          <!-- Gallery Item 3 -->
+          <div
+            class="relative overflow-hidden group aspect-[4/5] bg-brand-gray"
+          >
+            <img
+              src="/images/cut-3.png"
+              alt="Perfilado de Barba"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+            >
+              <span
+                class="font-display text-3xl text-brand-red tracking-wider uppercase"
+                >Barba Premium</span
+              >
+            </div>
+          </div>
+          <!-- Gallery Item 4 -->
+          <div
+            class="relative overflow-hidden group aspect-[4/5] bg-brand-gray"
+          >
+            <img
+              src="/images/cut-4.png"
+              alt="Corte Texturizado"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+            >
+              <span
+                class="font-display text-3xl text-brand-red tracking-wider uppercase"
+                >Textura</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MIS SERVICIOS -->
+    <section
+      id="servicios"
+      class="py-24 px-6 md:px-12 max-w-7xl mx-auto relative"
+    >
+      <h2
+        class="font-display text-6xl md:text-8xl mb-16 text-center reveal uppercase"
+      >
+        MIS <span class="text-brand-red">SERVICIOS</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+        <!-- Servicio 1 -->
+        <div
+          onclick="openModal('Corte + Cejas')"
+          class="cursor-pointer glass-panel relative p-8 reveal group transition-all duration-300 hover:bg-brand-gray hover:shadow-glow-red border border-white/5 overflow-hidden"
+        >
+          <div
+            class="absolute -right-6 -top-6 text-9xl text-white/5 group-hover:text-brand-red/10 transition-colors duration-300"
+          >
+            <i class="fa-solid fa-scissors"></i>
+          </div>
+          <div class="relative z-10">
+            <h3
+              class="font-display text-5xl mb-2 group-hover:text-brand-red transition-colors uppercase"
+            >
+              Corte + Cejas
+            </h3>
+            <p class="text-gray-400 text-lg mb-8">
+              Corte a elección con perfilado de cejas preciso.
+            </p>
+            <div class="flex justify-between items-end">
+              <span class="text-4xl font-bold text-white font-display"
+                >$10.000</span
+              >
+              <span
+                class="text-sm uppercase tracking-widest text-brand-red font-semibold group-hover:translate-x-2 transition-transform duration-300"
+                >Agendar <i class="fa-solid fa-arrow-right ml-1"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 2 (Destacado) -->
+        <div
+          onclick="openModal('Corte + Barba')"
+          class="cursor-pointer bg-gradient-to-br from-brand-gray to-black border-2 border-brand-red/50 relative p-8 reveal group transition-all duration-300 hover:shadow-glow-red-strong overflow-hidden transform md:-translate-y-4 shadow-lg shadow-brand-red/20"
+          style="transition-delay: 100ms"
+        >
+          <!-- Badge -->
+          <div
+            class="absolute top-0 right-0 bg-brand-red text-white text-sm font-bold px-4 py-1 rounded-bl-lg uppercase tracking-wider font-display"
+          >
+            Full Service
+          </div>
+          <div
+            class="absolute -right-6 -top-6 text-9xl text-brand-red/5 group-hover:text-brand-red/15 transition-colors duration-300"
+          >
+            <i class="fa-solid fa-fire-flame-curved"></i>
+          </div>
+          <div class="relative z-10">
+            <h3 class="font-display text-5xl mb-2 text-brand-red uppercase">
+              Corte + Barba
+            </h3>
+            <p class="text-gray-300 text-lg mb-8">
+              Corte premium + perfilado de barba.
+            </p>
+            <div class="flex justify-between items-end">
+              <span class="text-4xl font-bold text-white font-display"
+                >$16.000</span
+              >
+              <span
+                class="text-sm uppercase tracking-widest text-brand-red font-semibold group-hover:translate-x-2 transition-transform duration-300"
+                >Agendar <i class="fa-solid fa-arrow-right ml-1"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div
+          onclick="openModal('Corte con Diseño')"
+          class="cursor-pointer glass-panel relative p-8 reveal group transition-all duration-300 hover:bg-brand-gray hover:shadow-glow-red border border-white/5 overflow-hidden"
+          style="transition-delay: 200ms"
+        >
+          <div
+            class="absolute -right-6 -top-6 text-9xl text-white/5 group-hover:text-brand-red/10 transition-colors duration-300"
+          >
+            <i class="fa-solid fa-pen-nib"></i>
+          </div>
+          <div class="relative z-10">
+            <h3
+              class="font-display text-5xl mb-2 group-hover:text-brand-red transition-colors uppercase"
+            >
+              Corte con Diseño
+            </h3>
+            <p class="text-gray-400 text-lg mb-8">
+              Corte fade con diseño freestyle o a elección (líneas, figuras).
+            </p>
+            <div class="flex justify-between items-end">
+              <span class="text-4xl font-bold text-white font-display"
+                >$12.000</span
+              >
+              <span
+                class="text-sm uppercase tracking-widest text-brand-red font-semibold group-hover:translate-x-2 transition-transform duration-300"
+                >Agendar <i class="fa-solid fa-arrow-right ml-1"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO Y MAPA -->
+    <section
+      id="contacto"
+      class="py-24 bg-brand-gray/20 border-t border-white/5 relative"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+      >
+        <!-- Info Text -->
+        <div class="reveal">
+          <h2 class="font-display text-6xl md:text-8xl mb-6 uppercase">
+            DÓNDE <span class="text-brand-red">ENCONTRARME</span>
+          </h2>
+          <p class="text-gray-400 mb-8 font-light text-xl">
+            Agenda tu hora y cáele. Ubicación central, ambiente premium y el
+            mejor flow de la zona.
+          </p>
+
+          <div class="space-y-6 mb-10">
+            <div class="flex items-start gap-4">
+              <div
+                class="w-14 h-14 bg-black flex items-center justify-center border border-brand-red/30 shrink-0 transform -skew-x-12"
+              >
+                <i
+                  class="fa-solid fa-location-dot text-brand-red text-xl transform skew-x-12"
+                ></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-xl uppercase tracking-wide">
+                  Ubicación
+                </h4>
+                <p class="text-gray-400 text-lg">
+                  Andrés Bello con General Mackenna
+                </p>
+                <p class="text-sm text-gray-500 uppercase">Temuco</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="w-14 h-14 bg-black flex items-center justify-center border border-brand-red/30 shrink-0 transform -skew-x-12"
+              >
+                <i
+                  class="fa-solid fa-clock text-brand-red text-xl transform skew-x-12"
+                ></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-xl uppercase tracking-wide">
+                  Horario de Atención
+                </h4>
+                <p class="text-gray-400 text-lg">Lunes a Domingo</p>
+                <p class="text-brand-red font-semibold text-lg">
+                  12:30 - 21:30
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="https://instagram.com/manu_barbeer"
+            target="_blank"
+            class="inline-flex items-center gap-3 bg-brand-red px-8 py-4 text-white font-bold uppercase tracking-widest hover:bg-red-700 transition-all duration-300 shadow-glow-red"
+          >
+            <i class="fa-brands fa-instagram text-2xl"></i>
+            Sígueme en Instagram
+          </a>
+        </div>
+
+        <!-- Mapa -->
+        <div
+          class="reveal glass-panel p-2 shadow-glow-red/20 relative overflow-hidden h-[450px] border border-brand-red/20"
+          style="transition-delay: 200ms"
+        >
+          <div
+            class="absolute inset-0 bg-brand-red/10 animate-pulse mix-blend-overlay pointer-events-none"
+          ></div>
+          <iframe
+            src="https://maps.google.com/maps?q=Andres%20Bello%20con%20General%20Mackenna,%20Temuco&t=m&z=16&ie=UTF8&iwloc=&output=embed"
+            class="w-full h-full grayscale contrast-125 opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-black py-12 border-t border-brand-red/20 text-center relative overflow-hidden"
+    >
+      <div
+        class="max-w-4xl mx-auto flex flex-col px-6 items-center relative z-10"
+      >
+        <img class="h-[125px] w-[125px] mb-5" src="/images/manu-logo.png" />
+
+        <div class="flex justify-center space-x-6 mb-8">
+          <a
+            href="https://instagram.com/manu_barbeer"
+            target="_blank"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-red hover:border-brand-red hover:text-white transition-all duration-300 transform hover:scale-110"
+          >
+            <i class="fa-brands fa-instagram text-xl"></i>
+          </a>
+          <a
+            href="https://wa.me/56936355068"
+            target="_blank"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-red hover:border-brand-red hover:text-white transition-all duration-300 transform hover:scale-110"
+          >
+            <i class="fa-brands fa-whatsapp text-xl"></i>
+          </a>
+        </div>
+
+        <p class="text-gray-500 text-sm font-light uppercase tracking-widest">
+          &copy; 2026 ManuBarber - Todos los derechos reservados.
+        </p>
+      </div>
+      <!-- Decorative Text background -->
+      <div
+        class="absolute bottom-[-20%] left-0 right-0 text-center pointer-events-none select-none opacity-5"
+      >
+        <span
+          class="font-display text-[15vw] leading-none text-brand-red uppercase"
+          >STREET</span
+        >
+      </div>
+    </footer>
+
+    <!-- MODAL DE RESERVA -->
+    <div
+      id="booking-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center px-4"
+    >
+      <!-- Backdrop Blur -->
+      <div
+        class="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity"
+        onclick="closeModal()"
+      ></div>
+
+      <!-- Modal Content -->
+      <div
+        id="modal-content"
+        class="bg-brand-gray border-t-4 border-t-brand-red p-8 w-full max-w-md relative z-10 shadow-glow-red-strong transform scale-95 opacity-0 transition-all duration-300"
+      >
+        <!-- Close btn -->
+        <button
+          onclick="closeModal()"
+          class="absolute top-4 right-4 text-gray-500 hover:text-brand-red transition-colors"
+        >
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+
+        <div class="text-center mb-8">
+          <h3 class="font-display text-5xl text-white mb-1 uppercase">
+            Agendar <span class="text-brand-red">Hora</span>
+          </h3>
+          <p class="text-lg text-gray-400 font-light">
+            Completa los datos para confirmar vía WhatsApp
+          </p>
+        </div>
+
+        <form
+          id="booking-form"
+          onsubmit="submitBooking(event)"
+          class="space-y-6"
+        >
+          <div>
+            <label
+              class="block text-sm uppercase tracking-wider text-gray-400 mb-2 ml-1 font-bold"
+              >Tu Nombre</label
+            >
+            <input
+              type="text"
+              id="client-name"
+              required
+              placeholder="Ej: Matías"
+              class="w-full bg-black border border-white/10 px-4 py-4 text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-all placeholder:text-gray-700 text-lg"
+            />
+          </div>
+
+          <div>
+            <label
+              class="block text-sm uppercase tracking-wider text-gray-400 mb-2 ml-1 font-bold"
+              >Servicio Seleccionado</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+              >
+                <i class="fa-solid fa-scissors text-brand-red text-lg"></i>
+              </div>
+              <input
+                type="text"
+                id="service-name"
+                readonly
+                class="w-full bg-brand-black border border-brand-red/30 pl-12 pr-4 py-4 text-brand-red font-bold uppercase tracking-wider outline-none cursor-not-allowed text-lg"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full mt-6 bg-brand-red hover:bg-red-700 text-white font-bold uppercase tracking-widest py-4 transition-all duration-300 shadow-glow-red flex items-center justify-center gap-3 group text-lg"
+          >
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+            Confirmar Reserva
+            <i
+              class="fa-solid fa-arrow-right text-lg transition-transform duration-300 group-hover:translate-x-2"
+            ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+      // 1. Navbar Scroll Effect
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.remove(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.add("py-4");
+        }
+      });
+
+      // 2. Mobile Menu Toggle
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      let isMenuOpen = false;
+
+      function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML =
+            '<i class="fa-solid fa-xmark text-brand-red"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      menuBtn.addEventListener("click", toggleMenu);
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (isMenuOpen) toggleMenu();
+        });
+      });
+
+      // 3. Modal Logic
+      const modal = document.getElementById("booking-modal");
+      const modalContent = document.getElementById("modal-content");
+      const serviceInput = document.getElementById("service-name");
+      const nameInput = document.getElementById("client-name");
+
+      function openModal(service) {
+        serviceInput.value = service;
+        nameInput.value = ""; // Reset name
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+        // Trigger animation frame for transition
+        requestAnimationFrame(() => {
+          modalContent.classList.remove("scale-95", "opacity-0");
+          modalContent.classList.add("scale-100", "opacity-100");
+        });
+        document.body.style.overflow = "hidden";
+        nameInput.focus();
+      }
+
+      function closeModal() {
+        modalContent.classList.remove("scale-100", "opacity-100");
+        modalContent.classList.add("scale-95", "opacity-0");
+
+        setTimeout(() => {
+          modal.classList.remove("flex");
+          modal.classList.add("hidden");
+          document.body.style.overflow = "auto";
+        }, 300); // Wait for transition
+      }
+
+      // Close on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+          closeModal();
+        }
+      });
+
+      // 4. WhatsApp Submission
+      function submitBooking(e) {
+        e.preventDefault();
+        const nombre = nameInput.value.trim();
+        const servicio = serviceInput.value;
+
+        if (!nombre) return;
+
+        const mensaje = `Hola quiero agendar ${servicio} a nombre de ${nombre}`;
+        const numeroWs = "56936355068";
+
+        const url = `https://wa.me/${numeroWs}?text=${encodeURIComponent(mensaje)}`;
+
+        window.open(url, "_blank");
+        closeModal();
+      }
+
+      // 5. Scroll Animations (Intersection Observer)
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.15,
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target); // Run once
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".reveal").forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>
