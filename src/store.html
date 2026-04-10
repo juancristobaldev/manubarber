@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda | ManuBarber</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-black": "#0a0a0a",
+              "brand-gray": "#1c1c1c",
+              "brand-red": "#ff0022",
+            },
+            fontFamily: {
+              display: ['"Anton"', "sans-serif"],
+              body: ['"Oswald"', "sans-serif"],
+            },
+            boxShadow: {
+              "glow-red": "0 0 15px rgba(255, 0, 34, 0.4)",
+              "glow-red-strong": "0 0 25px rgba(255, 0, 34, 0.7)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+      body {
+        background-color: #0a0a0a;
+        color: #ffffff;
+        font-family: "Oswald", sans-serif;
+        overflow-x: hidden;
+      }
+
+      .glass-panel {
+        background: rgba(28, 28, 28, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.5, 0, 0, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ff0022;
+      }
+
+      /* Image Placeholders */
+      .product-img-placeholder {
+        background: radial-gradient(circle, #2a2a2a 0%, #1c1c1c 100%);
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased selection:bg-brand-red selection:text-white font-body"
+  >
+    <!-- NAVBAR (Simplificado para la tienda) -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 transition-all duration-300 py-3 px-6 md:px-12 top-0 bg-brand-black border-b border-brand-red/20 shadow-glow-red/10"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center relative">
+        <a
+          href="../index.html"
+          class="font-display text-3xl tracking-wider text-white hover:text-brand-red transition-colors z-50 uppercase flex items-center gap-3"
+        >
+          <i class="fa-solid fa-arrow-left text-lg"></i>
+          Volver
+        </a>
+
+        <div
+          class="font-display text-2xl text-brand-red uppercase tracking-widest hidden md:block"
+        >
+          Tienda Oficial
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER TIENDA -->
+    <header
+      class="pt-[300px] pb-[300px] px-6 md:px-12 text-center relative border-b border-white/5"
+    >
+      <!-- Decoración de fondo -->
+      <div
+        class="absolute inset-0 bg-[url('/images/perfumes/LOGOCURSED.jpeg')] bg-cover bg-center opacity-60 blur-sm pointer-events-none z-0"
+      ></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-black pointer-events-none z-0"
+      ></div>
+
+      <div class="relative z-10 max-w-3xl mx-auto">
+        <h1
+          class="font-display text-6xl md:text-8xl leading-none tracking-normal mb-4 uppercase reveal"
+        >
+          TIENDA <span class="text-brand-red">OFICIAL</span>
+        </h1>
+        <p
+          class="text-gray-400 text-lg md:text-xl font-light tracking-wide reveal"
+          style="transition-delay: 100ms"
+        >
+          Mantén tu aroma impecable todos los días. Fragancias seleccionadas
+          para tu estilo y personalidad. Resérvalas fácilmente y retíralas en
+          tienda.
+        </p>
+      </div>
+    </header>
+
+    <!-- GRILLA DE PRODUCTOS -->
+    <main class="py-16 px-6 md:px-12 max-w-7xl mx-auto relative">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+        id="product-grid"
+      >
+        <!-- Los productos se generan por JavaScript para mantener el HTML limpio, 
+             pero los coloco hardcodeados aquí para SEO y estructura clara según tu petición -->
+
+        <!-- Producto 1 -->
+        <div
+          class="glass-panel group flex flex-col h-full reveal border-t-2 border-transparent hover:border-brand-red transition-all duration-300"
+        >
+          <div
+            class="aspect-square bg-cover bg-center bg-[url('/images/perfumes/PROMO.png')] product-img-placeholder relative overflow-hidden flex items-center justify-center p-6"
+          >
+            <div
+              class="absolute top-3 right-3 bg-brand-red text-white text-xs font-bold px-2 py-1 uppercase font-display"
+            >
+              Más Vendido
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3
+              class="font-display text-2xl uppercase tracking-wide mb-2 group-hover:text-brand-red transition-colors"
+            >
+              Promo Cursed Smells
+            </h3>
+
+            <div class="flex flex-col items-center justify-between mb-5">
+              <span class="text-lg font-bold font-display"
+                >$12.000 - 100ml / $6.000 - 30ml</span
+              >
+            </div>
+            <button
+              onclick="reservarProducto('Promo Perfumes')"
+              class="w-full bg-brand-gray border border-brand-red/50 hover:bg-brand-red text-white uppercase font-bold py-3 text-sm tracking-widest transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-glow-red"
+            >
+              Reservar <i class="fa-brands fa-whatsapp"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Producto 2 -->
+        <div
+          class="glass-panel group flex flex-col h-full reveal border-t-2 border-transparent hover:border-brand-red transition-all duration-300"
+          style="transition-delay: 50ms"
+        >
+          <div
+            class="aspect-square bg-cover bg-center bg-[url('/images/perfumes/ASAD.png')] product-img-placeholder relative overflow-hidden flex items-center justify-center p-6"
+          ></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3
+              class="font-display text-2xl uppercase tracking-wide mb-2 group-hover:text-brand-red transition-colors"
+            >
+              Perfume ASAD
+            </h3>
+
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-bold font-display">$6.000 - 30ml</span>
+            </div>
+            <button
+              onclick="reservarProducto('Perfume ASAD')"
+              class="w-full bg-brand-gray border border-brand-red/50 hover:bg-brand-red text-white uppercase font-bold py-3 text-sm tracking-widest transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-glow-red"
+            >
+              Reservar <i class="fa-brands fa-whatsapp"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Producto 3 -->
+        <div
+          class="glass-panel group flex flex-col h-full reveal border-t-2 border-transparent hover:border-brand-red transition-all duration-300"
+          style="transition-delay: 100ms"
+        >
+          <div
+            class="aspect-square bg-cover bg-center !bg-[url('/images/perfumes/SALVANG.png')] product-img-placeholder relative overflow-hidden flex items-center justify-center p-6"
+          ></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3
+              class="font-display text-2xl uppercase tracking-wide mb-2 group-hover:text-brand-red transition-colors"
+            >
+              SALVANG Pour Home
+            </h3>
+
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-bold font-display">$6.000 - 30ml</span>
+            </div>
+            <button
+              onclick="reservarProducto('Salvang')"
+              class="w-full bg-brand-gray border border-brand-red/50 hover:bg-brand-red text-white uppercase font-bold py-3 text-sm tracking-widest transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-glow-red"
+            >
+              Reservar <i class="fa-brands fa-whatsapp"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Producto 4 -->
+        <div
+          class="glass-panel group flex flex-col h-full reveal border-t-2 border-transparent hover:border-brand-red transition-all duration-300"
+          style="transition-delay: 150ms"
+        >
+          <div
+            class="aspect-square bg-cover bg-center !bg-[url('/images/perfumes/VIGOROUS.png')] product-img-placeholder relative overflow-hidden flex items-center justify-center p-6"
+          ></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3
+              class="font-display text-2xl uppercase tracking-wide mb-2 group-hover:text-brand-red transition-colors"
+            >
+              VIGOROUS
+            </h3>
+
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-bold font-display"
+                >$12.000 - 100ml</span
+              >
+            </div>
+            <button
+              onclick="reservarProducto('VIGOROUS')"
+              class="w-full bg-brand-gray border border-brand-red/50 hover:bg-brand-red text-white uppercase font-bold py-3 text-sm tracking-widest transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-glow-red"
+            >
+              Reservar <i class="fa-brands fa-whatsapp"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Producto 5 -->
+        <div
+          class="glass-panel group flex flex-col h-full reveal border-t-2 border-transparent hover:border-brand-red transition-all duration-300"
+        >
+          <div
+            class="bg-cover bg-center !bg-[url('/images/perfumes/PERFUME.png')] aspect-square product-img-placeholder relative overflow-hidden flex items-center justify-center p-6"
+          ></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3
+              class="font-display text-2xl uppercase tracking-wide mb-2 group-hover:text-brand-red transition-colors"
+            >
+              Perfume
+            </h3>
+
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-bold font-display">$6.000 - 30ml</span>
+            </div>
+            <button
+              onclick="reservarProducto('Perfume')"
+              class="w-full bg-brand-gray border border-brand-red/50 hover:bg-brand-red text-white uppercase font-bold py-3 text-sm tracking-widest transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-glow-red"
+            >
+              Reservar <i class="fa-brands fa-whatsapp"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="glass-panel group flex flex-col h-full reveal border-t-2 border-transparent hover:border-brand-red transition-all duration-300"
+        >
+          <div
+            class="bg-cover bg-center !bg-[url('/images/perfumes/PERFUMES.png')] aspect-square product-img-placeholder relative overflow-hidden flex items-center justify-center p-6"
+          ></div>
+          <div class="p-6 flex flex-col flex-grow">
+            <h3
+              class="font-display text-2xl uppercase tracking-wide mb-2 group-hover:text-brand-red transition-colors"
+            >
+              Perfumes
+            </h3>
+
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-2xl font-bold font-display">$6.000 - 30ml</span>
+            </div>
+            <button
+              onclick="reservarProducto('Perfume')"
+              class="w-full bg-brand-gray border border-brand-red/50 hover:bg-brand-red text-white uppercase font-bold py-3 text-sm tracking-widest transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-glow-red"
+            >
+              Reservar <i class="fa-brands fa-whatsapp"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Producto 14 -->
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-black py-12 border-t border-brand-red/20 text-center relative overflow-hidden"
+    >
+      <div
+        class="max-w-4xl mx-auto flex flex-col px-6 items-center relative z-10"
+      >
+        <img class="h-[125px] w-[125px] mb-5" src="/images/manu-logo.png" />
+
+        <div class="flex justify-center space-x-6 mb-8">
+          <a
+            href="https://instagram.com/manu_barbeer"
+            target="_blank"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-red hover:border-brand-red hover:text-white transition-all duration-300 transform hover:scale-110"
+          >
+            <i class="fa-brands fa-instagram text-xl"></i>
+          </a>
+          <a
+            href="https://wa.me/56936355068"
+            target="_blank"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-red hover:border-brand-red hover:text-white transition-all duration-300 transform hover:scale-110"
+          >
+            <i class="fa-brands fa-whatsapp text-xl"></i>
+          </a>
+        </div>
+
+        <p class="text-gray-500 text-sm font-light uppercase tracking-widest">
+          &copy; 2026 ManuBarber - Todos los derechos reservados.
+        </p>
+      </div>
+      <!-- Decorative Text background -->
+      <div
+        class="absolute bottom-[-20%] left-0 right-0 text-center pointer-events-none select-none opacity-5"
+      >
+        <span
+          class="font-display text-[15vw] leading-none text-brand-red uppercase"
+          >STREET</span
+        >
+      </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+      // 1. Función para reservar vía WhatsApp
+      function reservarProducto(nombreProducto) {
+        // Formatear el mensaje
+        const mensaje = `Hola, quiero reservar el producto: ${nombreProducto}. ¿Lo tienes en stock en la barbería?`;
+
+        // Número de WhatsApp (extraído de tu index.html)
+        const numeroWs = "56936355068";
+
+        // Crear URL y abrir en pestaña nueva
+        const url = `https://wa.me/${numeroWs}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, "_blank");
+      }
+
+      // 2. Animaciones de Scroll (Intersection Observer)
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1, // Se activa más rápido para grillas
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".reveal").forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>
