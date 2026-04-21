@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ManuBarber | Membresía Cliente VIP</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-black": "#0a0a0a",
+              "brand-gray": "#1c1c1c",
+              "brand-red": "#ff0022",
+              "brand-gold": "#d4af37", // Dorado VIP
+              "brand-gold-light": "#f3e5ab",
+            },
+            fontFamily: {
+              display: ['"Anton"', "sans-serif"],
+              body: ['"Oswald"', "sans-serif"],
+            },
+            boxShadow: {
+              "glow-red": "0 0 15px rgba(255, 0, 34, 0.4)",
+              "glow-red-strong": "0 0 25px rgba(255, 0, 34, 0.7)",
+              "glow-gold": "0 0 15px rgba(212, 175, 55, 0.3)",
+              "glow-gold-strong": "0 0 30px rgba(212, 175, 55, 0.6)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #0a0a0a;
+        color: #ffffff;
+        font-family: "Oswald", sans-serif;
+        overflow-x: hidden;
+      }
+
+      .glass-panel {
+        background: rgba(28, 28, 28, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .glass-panel-vip {
+        background: linear-gradient(
+          145deg,
+          rgba(28, 28, 28, 0.9) 0%,
+          rgba(10, 10, 10, 0.95) 100%
+        );
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+      }
+
+      .text-outline {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+      }
+
+      .text-outline-gold {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(212, 175, 55, 0.4);
+      }
+
+      /* Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #d4af37;
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased selection:bg-brand-gold selection:text-black font-body"
+  >
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 top-0"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center relative">
+        <a
+          href="../index.html"
+          class="font-display text-4xl tracking-wider text-white hover:text-brand-red transition-colors z-50 uppercase"
+        >
+          <img class="h-[75px]" src="/images/manu-logo.png" />
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden text-white text-2xl z-50 focus:outline-none"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex space-x-8 font-semibold text-lg tracking-wider uppercase items-center"
+        >
+          <li>
+            <a
+              href="./store.html"
+              class="hover:text-brand-red transition-colors"
+              >Tienda</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#valor"
+              class="hover:text-brand-red transition-colors"
+              >Mi Valor</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#trabajo"
+              class="hover:text-brand-red transition-colors"
+              >Mi Trabajo</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#servicios"
+              class="hover:text-brand-red transition-colors"
+              >Servicios</a
+            >
+          </li>
+          <li>
+            <a href="./vip.html" class="hover:text-brand-red transition-colors"
+              >VIP</a
+            >
+          </li>
+          <li>
+            <a
+              href="./capacitacion.html"
+              class="hover:text-brand-red transition-colors"
+              >Cursos</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#contacto"
+              class="hover:text-brand-red transition-colors"
+              >Contacto</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 text-3xl font-display tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40 uppercase"
+        >
+          <a
+            href="./store.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Tienda</a
+          >
+          <a
+            href="../index.html#valor"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Valor</a
+          >
+          <a
+            href="../index.html#trabajo"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Trabajo</a
+          >
+          <a
+            href="../index.html#servicios"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mis Servicios</a
+          >
+          <a
+            href="./vip.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Clientes VIP</a
+          >
+          <a
+            href="./capacitacion.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Cursos</a
+          >
+          <a
+            href="../index.html#contacto"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Contacto</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <section
+      id="hero"
+      class="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 border-b border-brand-gold/20"
+    >
+      <div class="absolute inset-0 z-0">
+        <div
+          class="bg-[url('/images/hero.jpg')] bg-cover bg-fixed bg-center w-full h-full object-cover object-center grayscale opacity-30"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/50 to-brand-black"
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-brand-black via-transparent to-brand-black"
+        ></div>
+      </div>
+
+      <div
+        class="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center mt-16"
+      >
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1 border border-brand-gold/50 rounded-full mb-6 bg-brand-gold/10"
+        >
+          <i class="fa-solid fa-crown text-brand-gold text-sm"></i>
+          <span
+            class="text-brand-gold-light text-sm tracking-widest uppercase font-bold"
+            >Membresía Exclusiva</span
+          >
+        </div>
+        <h1
+          class="font-display text-7xl md:text-8xl lg:text-9xl leading-none tracking-normal mb-4 drop-shadow-2xl uppercase text-white"
+        >
+          CLIENTES <br />
+          <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-yellow-600 drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]"
+            >VIP</span
+          >
+        </h1>
+        <p
+          class="text-gray-300 text-xl md:text-2xl mb-10 font-light tracking-wide max-w-2xl"
+        >
+          Cortes asegurados todo el mes. Mantén tu imagen intacta pagando menos.
+          Exclusividad, ahorro y el mejor estilo de la calle.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-20 px-6 md:px-12 max-w-7xl mx-auto relative">
+      <div class="text-center mb-16 reveal">
+        <h2
+          class="font-display text-5xl md:text-7xl uppercase text-outline-gold mb-2"
+        >
+          ¿Cómo ser un
+        </h2>
+        <h2 class="font-display text-6xl md:text-8xl uppercase text-brand-gold">
+          Cliente VIP?
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal">
+        <div
+          class="glass-panel p-8 md:p-12 relative overflow-hidden group border-r-4 border-r-brand-gray"
+        >
+          <div
+            class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-600 to-transparent opacity-50"
+          ></div>
+          <h3
+            class="font-display text-4xl text-gray-400 uppercase tracking-widest mb-6"
+          >
+            Sin Membresía
+          </h3>
+          <ul class="space-y-4 text-xl text-gray-300 font-light">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-xmark text-gray-600"></i> Por lo general te
+              cortas 4 veces al mes.
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-xmark text-gray-600"></i> Pagarías
+              <span class="font-bold text-white">$10.000 por corte.</span>
+            </li>
+          </ul>
+          <div class="mt-8 pt-6 border-t border-white/10">
+            <p class="text-gray-400 text-lg uppercase tracking-wider mb-1">
+              Gasto Mensual Total:
+            </p>
+            <p
+              class="font-display text-6xl text-white opacity-50 line-through decoration-brand-red decoration-4"
+            >
+              $40.000
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="glass-panel-vip p-8 md:p-12 relative overflow-hidden group border-l-4 border-l-brand-gold shadow-glow-gold/20 transform md:scale-105"
+        >
+          <div
+            class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-50"
+          ></div>
+          <div
+            class="absolute -right-10 -top-10 text-9xl text-brand-gold/10 group-hover:text-brand-gold/20 transition-colors duration-500"
+          >
+            <i class="fa-solid fa-id-card"></i>
+          </div>
+          <h3
+            class="font-display text-4xl text-brand-gold uppercase tracking-widest mb-6 relative z-10"
+          >
+            Con Tarjeta VIP
+          </h3>
+          <ul class="space-y-4 text-xl text-white font-light relative z-10">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-gold"></i> Tienes tus 4
+              cortes asegurados.
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-gold"></i> Congelas tu
+              precio de forma mensual.
+            </li>
+          </ul>
+          <div class="mt-8 pt-6 border-t border-brand-gold/20 relative z-10">
+            <p
+              class="text-brand-gold-light text-lg uppercase tracking-wider mb-1"
+            >
+              Pagas Sólo:
+            </p>
+            <div class="flex items-end gap-4">
+              <p
+                class="font-display text-7xl text-white drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]"
+              >
+                $35.000
+              </p>
+              <p
+                class="text-brand-red font-bold text-xl mb-2 bg-brand-red/10 px-3 py-1 rounded"
+              >
+                ¡Ahorras $5.000!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="planes"
+      class="py-24 bg-brand-gray/30 border-y border-brand-gold/10 relative"
+    >
+      <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <h2
+          class="font-display text-5xl md:text-7xl mb-16 text-center reveal uppercase"
+        >
+          ELIGE TU <span class="text-brand-gold">PLAN</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div
+            class="glass-panel-vip flex flex-col p-8 md:p-10 reveal group hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 bg-brand-gray text-white text-xs font-bold px-4 py-2 rounded-bl-lg uppercase tracking-wider"
+            >
+              Plan Básico VIP
+            </div>
+
+            <h3 class="font-display text-5xl text-white mb-2 uppercase mt-4">
+              Solo Corte
+            </h3>
+            <p class="text-gray-400 mb-8 font-light text-lg">
+              Ideal para mantener tu degradado y estilo fresco todas las
+              semanas.
+            </p>
+
+            <div class="mb-8">
+              <span
+                class="text-gray-500 line-through text-2xl font-display block mb-[-10px]"
+                >$40.000</span
+              >
+              <div class="flex items-end gap-2">
+                <span class="font-display text-6xl text-brand-gold"
+                  >$35.000</span
+                >
+                <span
+                  class="text-gray-400 uppercase tracking-widest text-sm mb-2"
+                  >/ mensual</span
+                >
+              </div>
+            </div>
+
+            <ul class="space-y-3 mb-10 flex-grow text-gray-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-scissors text-brand-gold w-5"></i> 4
+                Cortes de cabello al mes
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-calendar-check text-brand-gold w-5"></i>
+                Agendamiento prioritario
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-credit-card text-brand-gold w-5"></i>
+                Tarjeta de Cliente VIP física
+              </li>
+            </ul>
+
+            <button
+              onclick="openVipModal('Membresía VIP - Solo Corte', '35.000')"
+              class="w-full bg-transparent border-2 border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-black font-bold uppercase tracking-widest py-4 transition-all duration-300 text-lg"
+            >
+              Adquirir Plan
+            </button>
+          </div>
+
+          <div
+            class="glass-panel-vip flex flex-col p-8 md:p-10 reveal group hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden shadow-glow-gold/20"
+            style="transition-delay: 100ms"
+          >
+            <div
+              class="absolute inset-0 bg-brand-gold/5 pointer-events-none"
+            ></div>
+            <div
+              class="absolute top-0 right-0 bg-brand-gold text-black text-xs font-bold px-4 py-2 rounded-bl-lg uppercase tracking-wider"
+            >
+              Más Popular
+            </div>
+
+            <h3
+              class="font-display text-5xl text-brand-gold mb-2 uppercase mt-4"
+            >
+              Corte + Barba
+            </h3>
+            <p class="text-gray-400 mb-8 font-light text-lg">
+              El servicio completo. Corte y perfilado de barba para una imagen
+              impecable.
+            </p>
+
+            <div class="mb-8">
+              <span
+                class="text-gray-500 line-through text-2xl font-display block mb-[-10px]"
+                >$60.000</span
+              >
+              <div class="flex items-end gap-2">
+                <span
+                  class="font-display text-6xl text-white drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]"
+                  >$50.000</span
+                >
+                <span
+                  class="text-gray-400 uppercase tracking-widest text-sm mb-2"
+                  >/ mensual</span
+                >
+              </div>
+              <p
+                class="text-brand-red text-sm font-bold mt-2 uppercase tracking-wide"
+              >
+                Ahorras $10.000
+              </p>
+            </div>
+
+            <ul class="space-y-3 mb-10 flex-grow text-white">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-scissors text-brand-gold w-5"></i> 4
+                Cortes de cabello al mes
+              </li>
+              <li class="flex items-center gap-3">
+                <i
+                  class="fa-solid fa-fire-flame-curved text-brand-gold w-5"
+                ></i>
+                4 Perfilados de barba completos
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-calendar-check text-brand-gold w-5"></i>
+                Agendamiento prioritario
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-credit-card text-brand-gold w-5"></i>
+                Tarjeta de Cliente VIP física
+              </li>
+            </ul>
+
+            <button
+              onclick="openVipModal('Membresía VIP - Corte + Barba', '50.000')"
+              class="w-full bg-brand-gold hover:bg-yellow-500 text-black font-bold uppercase tracking-widest py-4 transition-all duration-300 shadow-glow-gold text-lg"
+            >
+              Adquirir Plan Full
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer
+      class="bg-black py-12 border-t border-brand-gold/20 text-center relative overflow-hidden"
+    >
+      <div
+        class="max-w-4xl mx-auto flex flex-col px-6 items-center relative z-10"
+      >
+        <img
+          class="h-[125px] w-[125px] mb-5"
+          src="/images/manu-logo.png"
+          alt="Logo ManuBarber"
+        />
+
+        <div class="flex justify-center space-x-6 mb-8">
+          <a
+            href="https://instagram.com/manu_barbeer"
+            target="_blank"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-gold hover:border-brand-gold hover:text-black transition-all duration-300 transform hover:scale-110"
+          >
+            <i class="fa-brands fa-instagram text-xl"></i>
+          </a>
+          <a
+            href="https://wa.me/56936355068"
+            target="_blank"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-gold hover:border-brand-gold hover:text-black transition-all duration-300 transform hover:scale-110"
+          >
+            <i class="fa-brands fa-whatsapp text-xl"></i>
+          </a>
+        </div>
+
+        <p class="text-gray-500 text-sm font-light uppercase tracking-widest">
+          © 2026 ManuBarber - Todos los derechos reservados.
+        </p>
+      </div>
+      <div
+        class="absolute bottom-[-20%] left-0 right-0 text-center pointer-events-none select-none opacity-5"
+      >
+        <span
+          class="font-display text-[15vw] leading-none text-brand-gold uppercase"
+          >ELITE</span
+        >
+      </div>
+    </footer>
+
+    <div
+      id="vip-modal"
+      class="fixed inset-0 z-[100] hidden items-center justify-center px-4"
+    >
+      <div
+        class="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity"
+        onclick="closeVipModal()"
+      ></div>
+
+      <div
+        id="vip-modal-content"
+        class="bg-brand-gray border-t-4 border-t-brand-gold p-8 w-full max-w-md relative z-10 shadow-glow-gold-strong transform scale-95 opacity-0 transition-all duration-300"
+      >
+        <button
+          onclick="closeVipModal()"
+          class="absolute top-4 right-4 text-gray-500 hover:text-brand-gold transition-colors"
+        >
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+
+        <div class="text-center mb-8">
+          <i class="fa-solid fa-crown text-brand-gold text-4xl mb-2"></i>
+          <h3 class="font-display text-4xl text-white mb-1 uppercase">
+            Únete a la <span class="text-brand-gold">Élite</span>
+          </h3>
+          <p class="text-gray-400 font-light">
+            Completa tus datos para emitir tu Tarjeta VIP vía WhatsApp.
+          </p>
+        </div>
+
+        <form
+          id="vip-booking-form"
+          onsubmit="submitVipBooking(event)"
+          class="space-y-6"
+        >
+          <div>
+            <label
+              class="block text-sm uppercase tracking-wider text-brand-gold-light mb-2 ml-1 font-bold"
+              >Tu Nombre</label
+            >
+            <input
+              type="text"
+              id="vip-name"
+              required
+              placeholder="Ej: Matías"
+              class="w-full bg-black border border-white/10 px-4 py-4 text-white focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-all placeholder:text-gray-700 text-lg"
+            />
+          </div>
+
+          <div>
+            <label
+              class="block text-sm uppercase tracking-wider text-brand-gold-light mb-2 ml-1 font-bold"
+              >Plan Seleccionado</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+              >
+                <i class="fa-solid fa-id-card text-brand-gold text-lg"></i>
+              </div>
+              <input
+                type="text"
+                id="vip-plan-name"
+                readonly
+                class="w-full bg-brand-black border border-brand-gold/30 pl-12 pr-4 py-4 text-brand-gold font-bold uppercase tracking-wider outline-none cursor-not-allowed text-lg"
+              />
+              <input type="hidden" id="vip-plan-price" />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full mt-6 bg-brand-gold hover:bg-yellow-500 text-black font-bold uppercase tracking-widest py-4 transition-all duration-300 shadow-glow-gold flex items-center justify-center gap-3 group text-lg"
+          >
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+            Solicitar Membresía
+            <i
+              class="fa-solid fa-arrow-right text-lg transition-transform duration-300 group-hover:translate-x-2"
+            ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // 1. Navbar Scroll Effect
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.remove(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.add("py-4");
+        }
+      });
+
+      // 2. Mobile Menu Toggle
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      let isMenuOpen = false;
+
+      function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML =
+            '<i class="fa-solid fa-xmark text-brand-red"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      menuBtn.addEventListener("click", toggleMenu);
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (isMenuOpen) toggleMenu();
+        });
+      });
+
+      // 3. Modal VIP Logic
+      const vipModal = document.getElementById("vip-modal");
+      const vipModalContent = document.getElementById("vip-modal-content");
+      const planInput = document.getElementById("vip-plan-name");
+      const priceInput = document.getElementById("vip-plan-price");
+      const nameInput = document.getElementById("vip-name");
+
+      function openVipModal(planName, price) {
+        planInput.value = planName;
+        priceInput.value = price;
+        nameInput.value = "";
+        vipModal.classList.remove("hidden");
+        vipModal.classList.add("flex");
+
+        requestAnimationFrame(() => {
+          vipModalContent.classList.remove("scale-95", "opacity-0");
+          vipModalContent.classList.add("scale-100", "opacity-100");
+        });
+        document.body.style.overflow = "hidden";
+        nameInput.focus();
+      }
+
+      function closeVipModal() {
+        vipModalContent.classList.remove("scale-100", "opacity-100");
+        vipModalContent.classList.add("scale-95", "opacity-0");
+
+        setTimeout(() => {
+          vipModal.classList.remove("flex");
+          vipModal.classList.add("hidden");
+          document.body.style.overflow = "auto";
+        }, 300);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !vipModal.classList.contains("hidden")) {
+          closeVipModal();
+        }
+      });
+
+      // 4. WhatsApp Submission
+      function submitVipBooking(e) {
+        e.preventDefault();
+        const nombre = nameInput.value.trim();
+        const plan = planInput.value;
+        const precio = priceInput.value;
+
+        if (!nombre) return;
+
+        const mensaje = `Hola ManuBarber, mi nombre es ${nombre} y quiero suscribirme al plan *${plan}* por el valor mensual de $${precio}. ¿Me envías los datos para la transferencia y activar mi Tarjeta VIP? 👑✂️`;
+        const numeroWs = "56936355068"; // Tu número actual
+
+        const url = `https://wa.me/${numeroWs}?text=${encodeURIComponent(mensaje)}`;
+
+        window.open(url, "_blank");
+        closeVipModal();
+      }
+
+      // 5. Scroll Animations
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.15,
+      };
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

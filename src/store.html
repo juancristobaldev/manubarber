@@ -100,21 +100,117 @@
     <!-- NAVBAR (Simplificado para la tienda) -->
     <nav
       id="navbar"
-      class="fixed w-full z-50 transition-all duration-300 py-3 px-6 md:px-12 top-0 bg-brand-black border-b border-brand-red/20 shadow-glow-red/10"
+      class="fixed w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 top-0"
     >
       <div class="max-w-7xl mx-auto flex justify-between items-center relative">
         <a
           href="../index.html"
-          class="font-display text-3xl tracking-wider text-white hover:text-brand-red transition-colors z-50 uppercase flex items-center gap-3"
+          class="font-display text-4xl tracking-wider text-white hover:text-brand-red transition-colors z-50 uppercase"
         >
-          <i class="fa-solid fa-arrow-left text-lg"></i>
-          Volver
+          <img class="h-[75px]" src="/images/manu-logo.png" />
         </a>
 
-        <div
-          class="font-display text-2xl text-brand-red uppercase tracking-widest hidden md:block"
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden text-white text-2xl z-50 focus:outline-none"
         >
-          Tienda Oficial
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex space-x-8 font-semibold text-lg tracking-wider uppercase items-center"
+        >
+          <li>
+            <a
+              href="./store.html"
+              class="hover:text-brand-red transition-colors"
+              >Tienda</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#valor"
+              class="hover:text-brand-red transition-colors"
+              >Mi Valor</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#trabajo"
+              class="hover:text-brand-red transition-colors"
+              >Mi Trabajo</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#servicios"
+              class="hover:text-brand-red transition-colors"
+              >Servicios</a
+            >
+          </li>
+          <li>
+            <a href="./vip.html" class="hover:text-brand-red transition-colors"
+              >VIP</a
+            >
+          </li>
+          <li>
+            <a
+              href="./capacitacion.html"
+              class="hover:text-brand-red transition-colors"
+              >Cursos</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#contacto"
+              class="hover:text-brand-red transition-colors"
+              >Contacto</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 text-3xl font-display tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40 uppercase"
+        >
+          <a
+            href="./store.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Tienda</a
+          >
+          <a
+            href="../index.html#valor"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Valor</a
+          >
+          <a
+            href="../index.html#trabajo"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Trabajo</a
+          >
+          <a
+            href="../index.html#servicios"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mis Servicios</a
+          >
+          <a
+            href="./vip.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Clientes VIP</a
+          >
+          <a
+            href="./capacitacion.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Cursos</a
+          >
+          <a
+            href="../index.html#contacto"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Contacto</a
+          >
         </div>
       </div>
     </nav>
@@ -372,6 +468,58 @@
 
     <!-- JAVASCRIPT -->
     <script>
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.remove(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.add("py-4");
+        }
+      });
+
+      // 2. Mobile Menu Toggle
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      let isMenuOpen = false;
+
+      function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML =
+            '<i class="fa-solid fa-xmark text-brand-red"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      menuBtn.addEventListener("click", toggleMenu);
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (isMenuOpen) toggleMenu();
+        });
+      });
+
       // 1. Función para reservar vía WhatsApp
       function reservarProducto(nombreProducto) {
         // Formatear el mensaje
