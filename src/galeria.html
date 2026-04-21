@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ManuBarber | Portafolio y Galería de Cortes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-black": "#0a0a0a",
+              "brand-gray": "#1c1c1c",
+              "brand-red": "#ff0022",
+            },
+            fontFamily: {
+              display: ['"Anton"', "sans-serif"],
+              body: ['"Oswald"', "sans-serif"],
+            },
+            boxShadow: {
+              "glow-red": "0 0 15px rgba(255, 0, 34, 0.4)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: #0a0a0a;
+        color: #ffffff;
+        font-family: "Oswald", sans-serif;
+      }
+
+      .glass-panel {
+        background: rgba(28, 28, 28, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Animación de entrada inicial */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Transición suave para el filtro de la galería */
+      .gallery-item {
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      /* Estilos Lightbox */
+      #lightbox {
+        display: none;
+        position: fixed;
+        z-index: 200;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      #lightbox.active {
+        display: flex;
+      }
+
+      .lightbox-img {
+        max-width: 90%;
+        max-height: 85vh;
+        box-shadow: 0 0 50px rgba(255, 0, 34, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+  <body class="antialiased font-body">
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 transition-all duration-300 py-4 px-6 md:px-12 top-0"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center relative">
+        <a
+          href="../index.html"
+          class="font-display text-4xl tracking-wider text-white hover:text-brand-red transition-colors z-50 uppercase"
+        >
+          <img class="h-[75px]" src="/images/manu-logo.png" />
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden text-white text-2xl z-50 focus:outline-none"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Desktop Menu -->
+        <ul
+          class="hidden md:flex space-x-8 font-semibold text-lg tracking-wider uppercase items-center"
+        >
+          <li>
+            <a
+              href="./store.html"
+              class="hover:text-brand-red transition-colors"
+              >Tienda</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#valor"
+              class="hover:text-brand-red transition-colors"
+              >Mi Valor</a
+            >
+          </li>
+          <li>
+            <a
+              href="./galeria.html"
+              class="hover:text-brand-red transition-colors"
+              >Mi Trabajo</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#servicios"
+              class="hover:text-brand-red transition-colors"
+              >Servicios</a
+            >
+          </li>
+          <li>
+            <a href="./vip.html" class="hover:text-brand-red transition-colors"
+              >VIP</a
+            >
+          </li>
+          <li>
+            <a
+              href="./capacitacion.html"
+              class="hover:text-brand-red transition-colors"
+              >Cursos</a
+            >
+          </li>
+          <li>
+            <a
+              href="../index.html#contacto"
+              class="hover:text-brand-red transition-colors"
+              >Contacto</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          id="mobile-menu"
+          class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 text-3xl font-display tracking-widest opacity-0 pointer-events-none transition-opacity duration-300 z-40 uppercase"
+        >
+          <a
+            href="./store.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Tienda</a
+          >
+          <a
+            href="../index.html#valor"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Valor</a
+          >
+          <a
+            href="./galeria.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mi Trabajo</a
+          >
+          <a
+            href="../index.html#servicios"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Mis Servicios</a
+          >
+          <a
+            href="./vip.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Clientes VIP</a
+          >
+          <a
+            href="./capacitacion.html"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Cursos</a
+          >
+          <a
+            href="../index.html#contacto"
+            class="mobile-link hover:text-brand-red transition-colors"
+            >Contacto</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <header class="pt-40 pb-16 px-6 text-center relative overflow-hidden">
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 opacity-10 pointer-events-none"
+      >
+        <span
+          class="font-display text-[25vw] leading-none text-white select-none uppercase"
+          >PORTAFOLIO</span
+        >
+      </div>
+
+      <div class="relative z-10 reveal">
+        <h1 class="font-display text-7xl md:text-9xl mb-4 uppercase">
+          MI <span class="text-brand-red">TRABAJO</span>
+        </h1>
+        <p
+          class="text-gray-400 text-lg md:text-2xl font-light tracking-widest uppercase max-w-2xl mx-auto"
+        >
+          Precisión quirúrgica en cada línea.
+        </p>
+      </div>
+    </header>
+
+    <section
+      class="max-w-7xl mx-auto px-6 mb-12 flex flex-wrap justify-center gap-3 reveal"
+    >
+      <button
+        data-filter="all"
+        class="filter-btn px-5 py-2 border border-brand-red bg-brand-red text-white font-bold uppercase tracking-widest text-xs md:text-sm transition-colors duration-300"
+      >
+        Todos
+      </button>
+      <button
+        data-filter="normal"
+        class="filter-btn px-5 py-2 border border-white/10 hover:border-brand-red text-gray-400 hover:text-white font-bold uppercase tracking-widest text-xs md:text-sm transition-colors duration-300"
+      >
+        Corte Normal
+      </button>
+      <button
+        data-filter="design"
+        class="filter-btn px-5 py-2 border border-white/10 hover:border-brand-red text-gray-400 hover:text-white font-bold uppercase tracking-widest text-xs md:text-sm transition-colors duration-300"
+      >
+        Corte con Diseño
+      </button>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 md:px-12 pb-32">
+      <div
+        class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6"
+        id="gallery-grid"
+      >
+        <div
+          data-category="design"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="
+            openLightbox('/images/cut-1.png', 'MID FADE EN V CON DISEÑO')
+          "
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/cut-1.png"
+              alt="Corte con diseño"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+
+        <div
+          data-category="design"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/cut-2.png', 'LOW FADE TEXTURIZADO')"
+          style="transition-delay: 100ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/cut-2.png"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+
+        <div
+          data-category="design"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/cut-3.png', 'DISEÑO VERSACE PREMIUM')"
+          style="transition-delay: 200ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/cut-3.png"
+              alt="Corte con diseño"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+
+        <div
+          data-category="design"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/cut-4.png', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/cut-4.png"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+
+        <div
+          data-category="design"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/cut-5.jpg', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/cut-5.jpg"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+
+        <div
+          data-category="normal"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/normal-1.jpg', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/normal-1.jpg"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+        <div
+          data-category="normal"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/normal-2.jpg', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/normal-2.jpg"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+        <div
+          data-category="normal"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/normal-3.jpg', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/normal-3.jpg"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+        <div
+          data-category="normal"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/normal-4.jpg', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/normal-4.jpg"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+        <div
+          data-category="normal"
+          class="gallery-item reveal group relative overflow-hidden cursor-pointer w-full"
+          onclick="openLightbox('/images/normal-5.jpg', 'BURST FADE')"
+          style="transition-delay: 0ms"
+        >
+          <div class="aspect-[4/5] bg-brand-gray overflow-hidden">
+            <img
+              src="/images/normal-5.jpg"
+              alt="Corte normal"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+
+          <div
+            class="absolute top-2 right-2 md:top-4 md:right-4 bg-brand-black/80 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-[-10px] group-hover:translate-y-0"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass-plus text-sm md:text-base"
+            ></i>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex justify-center items-center">
+        <a
+          href="../index.html#servicios"
+          class="shrink-0 group mt-10 relative inline-flex items-center justify-center px-8 py-4 font-bold text-white border border-brand-red bg-black/50 uppercase tracking-widest transition-all duration-300 hover:bg-brand-red hover:shadow-glow-red text-lg"
+        >
+          <span class="relative">Agendar ahora</span>
+          <i
+            class="fa-solid fa-arrow-right ml-3 relative transition-transform duration-300 group-hover:translate-x-2"
+          ></i>
+        </a>
+      </div>
+    </section>
+
+    <footer class="bg-black py-12 border-t border-brand-red/20 text-center">
+      <div class="max-w-4xl mx-auto flex flex-col px-6 items-center">
+        <img class="h-[100px] mb-6" src="/images/manu-logo.png" alt="Logo" />
+        <div class="flex space-x-6 mb-8">
+          <a
+            href="https://instagram.com/manu_barbeer"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-red hover:text-white transition-all"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+          <a
+            href="https://wa.me/56936355068"
+            class="w-12 h-12 bg-brand-gray border border-white/10 flex items-center justify-center hover:bg-brand-red hover:text-white transition-all"
+            ><i class="fa-brands fa-whatsapp"></i
+          ></a>
+        </div>
+        <p class="text-gray-500 text-xs uppercase tracking-widest">
+          © 2026 ManuBarber - Estilo y Precisión.
+        </p>
+      </div>
+    </footer>
+
+    <div id="lightbox" onclick="closeLightbox()">
+      <button
+        class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-3xl md:text-4xl hover:text-brand-red transition-colors"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div
+        class="relative flex flex-col items-center max-w-5xl"
+        onclick="event.stopPropagation()"
+      >
+        <img
+          id="lightbox-img"
+          src=""
+          alt="Corte Ampliado"
+          class="lightbox-img"
+        />
+        <div class="mt-4 md:mt-6 text-center px-4"></div>
+      </div>
+    </div>
+
+    <script>
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.remove(
+            "bg-brand-black",
+            "border-b",
+            "border-brand-red/20",
+            "shadow-glow-red/10",
+            "py-3",
+          );
+          navbar.classList.add("py-4");
+        }
+      });
+
+      // 2. Mobile Menu Toggle
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      let isMenuOpen = false;
+
+      function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+          mobileMenu.classList.add("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML =
+            '<i class="fa-solid fa-xmark text-brand-red"></i>';
+          document.body.style.overflow = "hidden";
+        } else {
+          mobileMenu.classList.add("opacity-0", "pointer-events-none");
+          mobileMenu.classList.remove("opacity-100", "pointer-events-auto");
+          menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      menuBtn.addEventListener("click", toggleMenu);
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (isMenuOpen) toggleMenu();
+        });
+      });
+
+      // 1. Lógica Filtros de Galería (ACTUALIZADO)
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const galleryItems = document.querySelectorAll(".gallery-item");
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Remover estilos activos de todos los botones
+          filterBtns.forEach((b) => {
+            b.classList.remove(
+              "bg-brand-red",
+              "text-white",
+              "border-brand-red",
+            );
+            b.classList.add("border-white/10", "text-gray-400");
+          });
+
+          // Agregar estilos activos al botón clickeado
+          btn.classList.remove("border-white/10", "text-gray-400");
+          btn.classList.add("bg-brand-red", "text-white", "border-brand-red");
+
+          const filterValue = btn.getAttribute("data-filter");
+
+          // Filtrar items con animación
+          galleryItems.forEach((item) => {
+            const itemCategory = item.getAttribute("data-category");
+
+            // Ocultar suavemente primero
+            item.style.opacity = "0";
+            item.style.transform = "scale(0.9)";
+
+            setTimeout(() => {
+              if (filterValue === "all" || filterValue === itemCategory) {
+                item.style.display = "block"; // Aseguramos que vuelva al Grid
+
+                // Mostrar suavemente
+                setTimeout(() => {
+                  item.style.opacity = "1";
+                  item.style.transform = "scale(1)";
+                }, 50);
+              } else {
+                item.style.display = "none"; // Quitar del flujo para que Grid se reorganice
+              }
+            }, 300); // Tiempo coincide con transition-all
+          });
+        });
+      });
+
+      // 2. Lógica Lightbox
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+
+      function openLightbox(src, caption) {
+        lightboxImg.src = src;
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeLightbox();
+      });
+
+      // 3. Scroll Animations (Intersection Observer)
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
